@@ -1,118 +1,112 @@
-/* Reset */
-* {
-  box-sizing: border-box;
-}
-body, html {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #000;
-  color: #00bfff;
-  overflow-x: hidden;
-  height: 100%;
-  scroll-behavior: smooth;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shape Mod</title>
+  <link rel="stylesheet" href="style.css" />
 
-/* Header styling */
-header {
-  position: fixed;
-  top: -80px;
-  left: 0;
-  right: 0;
-  height: 80px;
-  background: #000;
-  border-bottom: 2px solid #00bfff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: top 0.3s ease;
-  z-index: 1000;
-}
-header.show {
-  top: 0;
-}
-#header-title {
-  color: #00bfff;
-  font-size: 1.8rem;
-  margin: 0;
-  text-shadow: 0 0 8px #00bfff;
-}
+  <!-- jQuery and Ripples Plugin -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/sirxemic/jquery.ripples@master/dist/jquery.ripples-min.js"></script>
+</head>
+<body>
 
-/* Intro section */
-.intro {
-  height: 100vh;
-  position: relative;
-  z-index: 1;
-}
-.corner-text {
-  position: absolute;
-  top: 2rem;
-  left: 2rem;
-  z-index: 10;
-}
-#typewriter {
-  font-size: 3rem;
-  color: #00bfff;
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 2px solid #00bfff;
-  width: fit-content;
-  animation: blink 0.8s steps(1) infinite;
-}
-@keyframes blink {
-  0%, 100% { border-color: transparent; }
-  50% { border-color: #00bfff; }
-}
+  <!-- Header -->
+  <header id="header">
+    <h1 id="header-title">Shape Mod</h1>
+  </header>
 
-/* Content */
-.content {
-  padding: 4rem 2rem;
-  background: transparent;
-  min-height: 50vh;
-  z-index: 1;
-  position: relative;
-}
-.tab {
-  display: none;
-  max-width: 800px;
-  margin: 0 auto;
-  background: #000;
-  color: #00bfff;
-  border: 1px solid #00bfff;
-  border-radius: 15px;
-  padding: 2rem;
-  box-shadow: 0 0 10px #00bfff44;
-}
+  <!-- Intro Section with Centered Text -->
+  <section class="intro">
+    <div class="center-text">
+      <h1 id="typewriter"></h1>
+    </div>
+  </section>
 
-/* Tab buttons container */
-.tab-buttons {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #000;
-  border: 2px solid #00bfff;
-  border-radius: 999px;
-  padding: 0.5rem 1.5rem;
-  display: flex;
-  gap: 1rem;
-  z-index: 1000;
-  box-shadow: 0 0 15px #00bfff66;
-}
+  <!-- Tab Content -->
+  <section class="content">
+    <div class="tab" id="tab1">
+      <h2>About Us</h2>
+      <p>This is the About Us content. Learn more about our mission and team.</p>
+    </div>
+    <div class="tab" id="tab2">
+      <h2>Why Us</h2>
+      <p>This is the Why Us content. Discover why we're the best choice for you.</p>
+    </div>
+    <div class="tab" id="tab3">
+      <h2>Contact Us</h2>
+      <p>This is the Contact Us content. Reach out to us through this section.</p>
+    </div>
+  </section>
 
-/* Tab buttons */
-.tab-buttons button {
-  background: transparent;
-  color: #00bfff;
-  border: none;
-  font-size: 1rem;
-  padding: 0.6rem 1.2rem;
-  cursor: pointer;
-  border-radius: 20px;
-  text-shadow: 0 0 6px #00bfff;
-  transition: background 0.3s ease;
-}
-.tab-buttons button:hover {
-  background: rgba(0, 191, 255, 0.2);
-  box-shadow: 0 0 8px #00bfff;
-}
+  <!-- Tabs Buttons -->
+  <div class="tab-buttons">
+    <button onclick="showTab('tab1')">ℹ️ About Us</button>
+    <button onclick="showTab('tab2')">❓ Why Us</button>
+    <button onclick="showTab('tab3')">✉️ Contact Us</button>
+  </div>
+
+  <script>
+    // Scroll-triggered header
+    const header = document.getElementById("header");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 100) {
+        header.classList.add("show");
+      } else {
+        header.classList.remove("show");
+      }
+    });
+
+    // Tab switch logic
+    function showTab(id) {
+      document.querySelectorAll(".tab").forEach(tab => tab.style.display = "none");
+      document.getElementById(id).style.display = "block";
+    }
+    showTab("tab1");
+
+    // Typewriter animation
+    const textElement = document.getElementById("typewriter");
+    const phrases = ["Shape Mod", "By Pentacord"];
+    let currentPhrase = 0, currentChar = 0, isDeleting = false;
+
+    function type() {
+      const fullText = phrases[currentPhrase];
+      textElement.textContent = isDeleting
+        ? fullText.substring(0, --currentChar)
+        : fullText.substring(0, ++currentChar);
+
+      if (!isDeleting && currentChar === fullText.length) {
+        setTimeout(() => {
+          isDeleting = true;
+          type();
+        }, 3000);
+        return;
+      }
+
+      if (isDeleting && currentChar === 0) {
+        currentPhrase = (currentPhrase + 1) % phrases.length;
+        isDeleting = false;
+        setTimeout(type, 500);
+        return;
+      }
+
+      setTimeout(type, isDeleting ? 75 : 100);
+    }
+    type();
+
+    // Ripple effect
+    $(document).ready(function () {
+      $('body').ripples({
+        resolution: 512,
+        dropRadius: 20,
+        perturbance: 0.04,
+      });
+    });
+  </script>
+
+</body>
+</html>
+
+
+
