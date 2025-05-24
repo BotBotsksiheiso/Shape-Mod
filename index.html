@@ -48,7 +48,11 @@
     // Show/hide header on scroll
     const header = document.getElementById("header");
     window.addEventListener("scroll", () => {
-      header.classList.toggle("show", window.scrollY > 100);
+      if (window.scrollY > 100) {
+        header.classList.add("show");
+      } else {
+        header.classList.remove("show");
+      }
     });
 
     // Tabs logic
@@ -88,7 +92,7 @@
     type();
 
     // Water Ripple Physics Initialization
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('body').ripples({
         resolution: 512,
         dropRadius: 20,
