@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Shape Mod</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -16,14 +16,14 @@
     <h1 id="header-title">Shape Mod</h1>
   </header>
 
-  <!-- Intro Section with Typing Animation -->
+  <!-- Intro Section -->
   <section class="intro">
     <div class="corner-text">
       <h1 id="typewriter"></h1>
     </div>
   </section>
 
-  <!-- Tabbed Content Section -->
+  <!-- Tab Content -->
   <section class="content">
     <div class="tab" id="tab1">
       <p>This is Tab 1 content.</p>
@@ -36,32 +36,33 @@
     </div>
   </section>
 
-  <!-- Tab Buttons (Bottom Center) -->
+  <!-- Tabs Buttons -->
   <div class="tab-buttons">
     <button onclick="showTab('tab1')">Tab 1</button>
     <button onclick="showTab('tab2')">Tab 2</button>
     <button onclick="showTab('tab3')">Tab 3</button>
   </div>
 
-  <!-- JavaScript -->
   <script>
-    // Scroll header show
+    // Show/hide header on scroll
     const header = document.getElementById("header");
     window.addEventListener("scroll", () => {
       header.classList.toggle("show", window.scrollY > 100);
     });
 
-    // Tab switching
+    // Tabs logic
     function showTab(id) {
-      document.querySelectorAll('.tab').forEach(tab => tab.style.display = 'none');
-      document.getElementById(id).style.display = 'block';
+      document.querySelectorAll(".tab").forEach(tab => (tab.style.display = "none"));
+      document.getElementById(id).style.display = "block";
     }
-    showTab('tab1');
+    showTab("tab1");
 
-    // Typing animation
+    // Typing animation loop
     const textElement = document.getElementById("typewriter");
     const phrases = ["Shape Mod", "By Pentacord"];
-    let currentPhrase = 0, currentChar = 0, isDeleting = false;
+    let currentPhrase = 0,
+      currentChar = 0,
+      isDeleting = false;
 
     function type() {
       const fullText = phrases[currentPhrase];
@@ -70,7 +71,10 @@
         : fullText.substring(0, ++currentChar);
 
       if (!isDeleting && currentChar === fullText.length) {
-        setTimeout(() => { isDeleting = true; type(); }, 3000);
+        setTimeout(() => {
+          isDeleting = true;
+          type();
+        }, 3000);
         return;
       }
       if (isDeleting && currentChar === 0) {
@@ -84,38 +88,71 @@
     }
     type();
 
-    // Ripple canvas effect
-    const canvas = document.getElementById('ripple-canvas');
-    const ctx = canvas.getContext('2d');
+    // Ripple effect implementation
+    const canvas = document.getElementById("ripple-canvas");
+    const ctx = canvas.getContext("2d");
     let width, height;
-    let ripples = [];
 
-    function resizeCanvas() {
+    function resize() {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
     }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+    window.addEventListener("resize", resize);
+    resize();
 
-    canvas.addEventListener('mousemove', e => {
-      ripples.push({ x: e.clientX, y: e.clientY, radius: 0, alpha: 1 });
+    // Particles for smooth trail
+    class RippleParticle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.radius = 0;
+        this.maxRadius = 40 + Math.random() * 20;
+        this.alpha = 0.8;
+        this.lineWidth = 2;
+        this.speed = 0.7 + Math.random() * 0.3;
+      }
+      update() {
+        this.radius += this.speed;
+        this.alpha -= 0.015;
+      }
+      draw(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+        ctx.strokeStyle = `rgba(0,191,255,${this.alpha})`;
+        ctx.lineWidth = this.lineWidth;
+        ctx.shadowColor = "rgba(0,191,255,0.6)";
+        ctx.shadowBlur = 8;
+        ctx.stroke();
+      }
+    }
+
+    const particles = [];
+
+    // Track mouse position and create particles continuously
+    let mouse = { x: null, y: null };
+    window.addEventListener("mousemove", e => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
     });
 
     function animate() {
       ctx.clearRect(0, 0, width, height);
-      ripples.forEach((r, i) => {
-        r.radius += 2;
-        r.alpha -= 0.02;
-        if (r.alpha <= 0) {
-          ripples.splice(i, 1);
+
+      // Add new particle at mouse pos
+      if (mouse.x && mouse.y) {
+        particles.push(new RippleParticle(mouse.x, mouse.y));
+      }
+
+      // Update and draw particles, remove faded ones
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.update();
+        if (p.alpha <= 0) {
+          particles.splice(i, 1);
         } else {
-          ctx.beginPath();
-          ctx.arc(r.x, r.y, r.radius, 0, 2 * Math.PI);
-          ctx.strokeStyle = `rgba(0,191,255,${r.alpha})`;
-          ctx.lineWidth = 2;
-          ctx.stroke();
+          p.draw(ctx);
         }
-      });
+      }
       requestAnimationFrame(animate);
     }
     animate();
