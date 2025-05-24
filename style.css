@@ -60,11 +60,20 @@ header.show {
   overflow: hidden;
   border-right: 2px solid #00bfff;
   width: fit-content;
-  animation: blink 0.8s steps(1) infinite;
+  animation: blink 0.8s steps(1) infinite, glow 1.5s ease-in-out infinite alternate;
+  text-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff, 0 0 30px #0099ff;
 }
 @keyframes blink {
   0%, 100% { border-color: transparent; }
   50% { border-color: #00bfff; }
+}
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px #00bfff, 0 0 10px #00bfff, 0 0 15px #0099ff;
+  }
+  to {
+    text-shadow: 0 0 20px #00bfff, 0 0 40px #00bfff, 0 0 60px #0099ff;
+  }
 }
 
 /* Content */
@@ -85,6 +94,12 @@ header.show {
   border-radius: 15px;
   padding: 2rem;
   box-shadow: 0 0 10px #00bfff44;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+.tab.active {
+  display: block;
+  opacity: 1;
 }
 
 /* Tab Buttons Container */
