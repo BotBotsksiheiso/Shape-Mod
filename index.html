@@ -99,14 +99,8 @@
     function showTab(id) {
       document.querySelectorAll(".tab").forEach(tab => {
         tab.classList.remove("active");
-        tab.style.display = "none";
       });
-
-      const target = document.getElementById(id);
-      target.style.display = "block";
-      setTimeout(() => {
-        target.classList.add("active");
-      }, 10);
+      document.getElementById(id).classList.add("active");
     }
     showTab("tab1");
 
