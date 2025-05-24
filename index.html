@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shape Mod</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header id="header">
+    <h1 id="header-title">Shape Mod</h1>
+  </header>
+
+  <section class="intro">
+    <div class="center-text">
+      <h1 class="shape">Shape</h1>
+      <h2 class="mod">Mod</h2>
+    </div>
+  </section>
+
+  <section class="content">
+    <p>Scroll down to see how "Shape Mod" becomes the title in the header.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque viverra nunc in pulvinar placerat...</p>
+    <p>More filler content below to enable scrolling...</p>
+  </section>
+
+  <script>
+    const header = document.getElementById("header");
+    const headerTitle = document.getElementById("header-title");
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 100) {
+        header.classList.add("show");
+      } else {
+        header.classList.remove("show");
+      }
+    });
+  </script>
+</body>
+</html>
