@@ -8,6 +8,17 @@ body, html {
   scroll-behavior: smooth;
 }
 
+/* Ripple Canvas */
+#ripple-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
 /* Header */
 header {
   position: fixed;
@@ -23,11 +34,9 @@ header {
   transition: top 0.3s ease;
   z-index: 1000;
 }
-
 header.show {
   top: 0;
 }
-
 #header-title {
   color: #00bfff;
   font-size: 1.8rem;
@@ -39,18 +48,17 @@ header.show {
 .intro {
   height: 100vh;
   background: #000;
-  border-bottom: 2px solid #00bfff;
   position: relative;
+  z-index: 1;
 }
-
 .corner-text {
   position: absolute;
   top: 2rem;
   left: 2rem;
   padding: 1rem 2rem;
   text-align: left;
+  z-index: 2;
 }
-
 #typewriter {
   font-size: 3rem;
   color: #00bfff;
@@ -60,14 +68,9 @@ header.show {
   width: fit-content;
   animation: blink 0.8s steps(1) infinite;
 }
-
 @keyframes blink {
-  0%, 100% {
-    border-color: transparent;
-  }
-  50% {
-    border-color: #00bfff;
-  }
+  0%, 100% { border-color: transparent; }
+  50% { border-color: #00bfff; }
 }
 
 /* Content section */
@@ -75,10 +78,10 @@ header.show {
   padding: 4rem 2rem;
   background-color: #000;
   color: #00bfff;
-  border-top: 2px solid #00bfff;
   min-height: 50vh;
+  position: relative;
+  z-index: 1;
 }
-
 .tab {
   display: none;
   background: #000;
@@ -104,7 +107,6 @@ header.show {
   gap: 1rem;
   z-index: 1000;
 }
-
 .tab-buttons button {
   background: transparent;
   color: #00bfff;
@@ -116,7 +118,6 @@ header.show {
   transition: background 0.3s ease;
   border-radius: 20px;
 }
-
 .tab-buttons button:hover {
   background: rgba(0, 191, 255, 0.1);
 }
