@@ -47,7 +47,6 @@ header.show {
   position: absolute;
   top: 2rem;
   left: 2rem;
-  border: 2px solid #00bfff;
   padding: 1rem 2rem;
   text-align: left;
 }
@@ -56,14 +55,12 @@ header.show {
   font-size: 3.5rem;
   margin: 0;
   color: #00bfff;
-  text-shadow: 0 0 10px #00bfff;
 }
 
 .corner-text .mod {
   font-size: 2rem;
   margin: 0;
   color: #00bfff;
-  text-shadow: 0 0 10px #00bfff;
 }
 
 /* Content section */
@@ -77,11 +74,13 @@ header.show {
 
 .tab {
   display: none;
+  background: #000;
+  color: #00bfff;
   border: 1px solid #00bfff;
+  border-radius: 15px; /* Rounded corners */
   padding: 2rem;
   max-width: 800px;
   margin: 0 auto;
-  background: #000;
 }
 
 /* Bottom fixed tab buttons */
@@ -90,22 +89,27 @@ header.show {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
+  background: #000;
+  border: 2px solid #00bfff;
+  border-radius: 999px; /* Makes it oval */
+  padding: 0.5rem 1rem;
   display: flex;
   gap: 1rem;
   z-index: 1000;
 }
 
 .tab-buttons button {
-  background: #000;
+  background: transparent;
   color: #00bfff;
-  border: 2px solid #00bfff;
-  padding: 0.6rem 1.2rem;
+  border: none;
   font-size: 1rem;
+  padding: 0.6rem 1.2rem;
   cursor: pointer;
   text-shadow: 0 0 5px #00bfff;
   transition: background 0.3s ease;
+  border-radius: 20px;
 }
 
 .tab-buttons button:hover {
-  background: #001f3f;
+  background: rgba(0, 191, 255, 0.1);
 }
