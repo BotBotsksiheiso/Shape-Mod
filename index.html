@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <!-- Ripple Canvas Background -->
+  <canvas id="ripple-canvas"></canvas>
+
   <!-- Header -->
   <header id="header">
     <h1 id="header-title">Shape Mod</h1>
@@ -39,71 +43,82 @@
     <button onclick="showTab('tab3')">Tab 3</button>
   </div>
 
-  <!-- Scripts -->
+  <!-- JavaScript -->
   <script>
-    // Scroll-based header reveal
+    // Scroll header show
     const header = document.getElementById("header");
     window.addEventListener("scroll", () => {
-      if (window.scrollY > 100) {
-        header.classList.add("show");
-      } else {
-        header.classList.remove("show");
-      }
+      header.classList.toggle("show", window.scrollY > 100);
     });
 
-    // Tab switch logic
+    // Tab switching
     function showTab(id) {
-      document.querySelectorAll('.tab').forEach(tab => {
-        tab.style.display = 'none';
-      });
+      document.querySelectorAll('.tab').forEach(tab => tab.style.display = 'none');
       document.getElementById(id).style.display = 'block';
     }
-    showTab('tab1'); // Show first tab by default
+    showTab('tab1');
 
-    // Typewriter animation
+    // Typing animation
     const textElement = document.getElementById("typewriter");
     const phrases = ["Shape Mod", "By Pentacord"];
-    let currentPhrase = 0;
-    let currentChar = 0;
-    let isDeleting = false;
-    let delayAfterTyping = 3000;
-    let delayAfterDeleting = 500;
+    let currentPhrase = 0, currentChar = 0, isDeleting = false;
 
     function type() {
       const fullText = phrases[currentPhrase];
-      let updatedText;
-
-      if (isDeleting) {
-        currentChar--;
-        updatedText = fullText.substring(0, currentChar);
-      } else {
-        currentChar++;
-        updatedText = fullText.substring(0, currentChar);
-      }
-
-      textElement.textContent = updatedText;
-
-      let typingSpeed = isDeleting ? 75 : 100;
+      textElement.textContent = isDeleting
+        ? fullText.substring(0, --currentChar)
+        : fullText.substring(0, ++currentChar);
 
       if (!isDeleting && currentChar === fullText.length) {
-        setTimeout(() => {
-          isDeleting = true;
-          type();
-        }, delayAfterTyping);
+        setTimeout(() => { isDeleting = true; type(); }, 3000);
         return;
       }
-
       if (isDeleting && currentChar === 0) {
-        isDeleting = false;
         currentPhrase = (currentPhrase + 1) % phrases.length;
-        setTimeout(type, delayAfterDeleting);
+        isDeleting = false;
+        setTimeout(type, 500);
         return;
       }
 
-      setTimeout(type, typingSpeed);
+      setTimeout(type, isDeleting ? 75 : 100);
     }
-
     type();
+
+    // Ripple canvas effect
+    const canvas = document.getElementById('ripple-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let ripples = [];
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    canvas.addEventListener('mousemove', e => {
+      ripples.push({ x: e.clientX, y: e.clientY, radius: 0, alpha: 1 });
+    });
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      ripples.forEach((r, i) => {
+        r.radius += 2;
+        r.alpha -= 0.02;
+        if (r.alpha <= 0) {
+          ripples.splice(i, 1);
+        } else {
+          ctx.beginPath();
+          ctx.arc(r.x, r.y, r.radius, 0, 2 * Math.PI);
+          ctx.strokeStyle = `rgba(0,191,255,${r.alpha})`;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
   </script>
 </body>
 </html>
