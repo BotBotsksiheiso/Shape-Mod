@@ -85,7 +85,6 @@ header.show {
   position: relative;
 }
 .tab {
-  display: none;
   max-width: 800px;
   margin: 0 auto;
   background: #000;
@@ -94,12 +93,20 @@ header.show {
   border-radius: 15px;
   padding: 2rem;
   box-shadow: 0 0 10px #00bfff44;
+  
   opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+  pointer-events: none;
+  height: 0;
+  overflow: hidden;
+  
+  transition: opacity 0.5s ease-in-out, height 0.5s ease-in-out, padding 0.5s ease-in-out;
+  position: relative;
 }
 .tab.active {
-  display: block;
   opacity: 1;
+  pointer-events: auto;
+  height: auto;
+  padding: 2rem;
 }
 
 /* Tab Buttons Container */
