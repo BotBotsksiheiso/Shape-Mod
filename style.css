@@ -11,8 +11,6 @@ body, html {
   overflow-x: hidden;
   height: 100%;
   scroll-behavior: smooth;
-  background-size: cover;
-  background-position: center;
 }
 
 /* Header styling */
