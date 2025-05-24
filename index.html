@@ -28,22 +28,21 @@
   <section class="content">
     <div class="tab" id="tab1">
       <h2>About Us</h2>
-      <p>We are a small but engaged dev team,aiming to create great mods for your game!  We were well known for scripting in roblox back then and now are working on good & working mods for the hit game Brawl Stars
-     
-                                     [ Owner : Pentacord ]
-     
-                                     [  Friends : Felix & Fearless ]
-     
-                                                    [ Developers : Hidden for privat reasons</p> ]
+      <p>We are a small but engaged dev team, aiming to create great mods for your game!  
+         We were well known for scripting in Roblox back then and now are working on good & working mods for the hit game Brawl Stars.</p>
+      <p>[ Owner: Pentacord ]</p>
+      <p>[ Friends: Felix & Fearless ]</p>
+      <p>[ Developers: Hidden for private reasons ]</p>
     </div>
     <div class="tab" id="tab2">
       <h2>Why Us</h2>
-      <p>Did you know that most of the Modding servers for Brawl stars are complete scams? We're here to change that!Exposing scammers and working on our own Mod are our goals!
-We offer a 100% success rate on our offers , wich means we can guarantee that it works if you meet the requirements</p>
+      <p>Did you know that most of the Modding servers for Brawl Stars are complete scams? We're here to change that! 
+         Exposing scammers and working on our own Mod are our goals! We offer a 100% success rate on our offers, 
+         which means we can guarantee that it works if you meet the requirements.</p>
     </div>
     <div class="tab" id="tab3">
       <h2>Contact Us</h2>
-      <p> Discord User : @pentacord</p>
+      <p>Discord User: @pentacord</p>
     </div>
   </section>
 
@@ -54,6 +53,7 @@ We offer a 100% success rate on our offers , wich means we can guarantee that it
     <button onclick="showTab('tab3')">✉️ Contact Us</button>
   </div>
 
+  <!-- JavaScript -->
   <script>
     // Scroll-triggered header
     const header = document.getElementById("header");
@@ -64,13 +64,6 @@ We offer a 100% success rate on our offers , wich means we can guarantee that it
         header.classList.remove("show");
       }
     });
-
-    // Tab switch logic
-    function showTab(id) {
-      document.querySelectorAll(".tab").forEach(tab => tab.style.display = "none");
-      document.getElementById(id).style.display = "block";
-    }
-    showTab("tab1");
 
     // Typewriter animation
     const textElement = document.getElementById("typewriter");
@@ -102,6 +95,21 @@ We offer a 100% success rate on our offers , wich means we can guarantee that it
     }
     type();
 
+    // Tab switch logic with fade-in animation
+    function showTab(id) {
+      document.querySelectorAll(".tab").forEach(tab => {
+        tab.classList.remove("active");
+        tab.style.display = "none";
+      });
+
+      const target = document.getElementById(id);
+      target.style.display = "block";
+      setTimeout(() => {
+        target.classList.add("active");
+      }, 10);
+    }
+    showTab("tab1");
+
     // Ripple effect
     $(document).ready(function () {
       $('body').ripples({
@@ -114,6 +122,3 @@ We offer a 100% success rate on our offers , wich means we can guarantee that it
 
 </body>
 </html>
-
-
-
