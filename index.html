@@ -12,22 +12,43 @@
   </header>
 
   <section class="intro">
-    <div class="center-text">
+    <div class="corner-text">
       <h1 class="shape">Shape</h1>
       <h2 class="mod">Mod</h2>
     </div>
   </section>
 
   <section class="content">
-    <p>Scroll down to see how "Shape Mod" becomes the title in the header.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque viverra nunc in pulvinar placerat...</p>
-    <p>More filler content below to enable scrolling...</p>
+    <div class="tab" id="tab1">
+      <p>This is Tab 1 content.</p>
+    </div>
+    <div class="tab" id="tab2">
+      <p>This is Tab 2 content.</p>
+    </div>
+    <div class="tab" id="tab3">
+      <p>This is Tab 3 content.</p>
+    </div>
   </section>
 
-  <script>
-    const header = document.getElementById("header");
-    const headerTitle = document.getElementById("header-title");
+  <div class="tab-buttons">
+    <button onclick="showTab('tab1')">Tab 1</button>
+    <button onclick="showTab('tab2')">Tab 2</button>
+    <button onclick="showTab('tab3')">Tab 3</button>
+  </div>
 
+  <script>
+    function showTab(id) {
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.style.display = 'none';
+      });
+      document.getElementById(id).style.display = 'block';
+    }
+
+    // Show first tab by default
+    showTab('tab1');
+
+    // Header scroll behavior
+    const header = document.getElementById("header");
     window.addEventListener("scroll", () => {
       if (window.scrollY > 100) {
         header.classList.add("show");
