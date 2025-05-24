@@ -35,33 +35,33 @@ header.show {
   text-shadow: 0 0 5px #00bfff;
 }
 
-/* Center text section */
+/* Intro section */
 .intro {
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
   background: #000;
   border-bottom: 2px solid #00bfff;
+  position: relative;
 }
 
-.center-text {
+.corner-text {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
   border: 2px solid #00bfff;
-  padding: 2rem;
-  text-align: center;
+  padding: 1rem 2rem;
+  text-align: left;
 }
 
-.center-text h1.shape {
-  font-size: 5rem;
+.corner-text .shape {
+  font-size: 3.5rem;
   margin: 0;
   color: #00bfff;
   text-shadow: 0 0 10px #00bfff;
 }
 
-.center-text h2.mod {
-  font-size: 3rem;
-  margin-top: 0.5rem;
+.corner-text .mod {
+  font-size: 2rem;
+  margin: 0;
   color: #00bfff;
   text-shadow: 0 0 10px #00bfff;
 }
@@ -72,13 +72,40 @@ header.show {
   background-color: #000;
   color: #00bfff;
   border-top: 2px solid #00bfff;
+  min-height: 50vh;
 }
 
-.content p {
-  max-width: 800px;
-  margin: 1rem auto;
-  line-height: 1.6;
+.tab {
+  display: none;
   border: 1px solid #00bfff;
-  padding: 1rem;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
   background: #000;
+}
+
+/* Bottom fixed tab buttons */
+.tab-buttons {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  z-index: 1000;
+}
+
+.tab-buttons button {
+  background: #000;
+  color: #00bfff;
+  border: 2px solid #00bfff;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  text-shadow: 0 0 5px #00bfff;
+  transition: background 0.3s ease;
+}
+
+.tab-buttons button:hover {
+  background: #001f3f;
 }
