@@ -11,16 +11,8 @@ body, html {
   overflow-x: hidden;
   height: 100%;
   scroll-behavior: smooth;
-}
-
-/* Ripple canvas styling */
-#ripple-canvas {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
+  background-size: cover;
+  background-position: center;
 }
 
 /* Header styling */
@@ -77,7 +69,7 @@ header.show {
 /* Content */
 .content {
   padding: 4rem 2rem;
-  background: #000;
+  background: transparent;
   min-height: 50vh;
   z-index: 1;
   position: relative;
