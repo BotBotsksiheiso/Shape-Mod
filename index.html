@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Shape Mod</title>
   <link rel="stylesheet" href="style.css" />
+
+  <!-- jQuery and Ripples Plugin -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/sirxemic/jquery.ripples@master/dist/jquery.ripples-min.js"></script>
 </head>
 <body>
-
-  <!-- Ripple Canvas Background -->
-  <canvas id="ripple-canvas"></canvas>
 
   <!-- Header -->
   <header id="header">
@@ -60,9 +61,7 @@
     // Typing animation loop
     const textElement = document.getElementById("typewriter");
     const phrases = ["Shape Mod", "By Pentacord"];
-    let currentPhrase = 0,
-      currentChar = 0,
-      isDeleting = false;
+    let currentPhrase = 0, currentChar = 0, isDeleting = false;
 
     function type() {
       const fullText = phrases[currentPhrase];
@@ -88,74 +87,14 @@
     }
     type();
 
-    // Ripple effect implementation
-    const canvas = document.getElementById("ripple-canvas");
-    const ctx = canvas.getContext("2d");
-    let width, height;
-
-    function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resize);
-    resize();
-
-    // Particles for smooth trail
-    class RippleParticle {
-      constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.radius = 0;
-        this.maxRadius = 40 + Math.random() * 20;
-        this.alpha = 0.8;
-        this.lineWidth = 2;
-        this.speed = 0.7 + Math.random() * 0.3;
-      }
-      update() {
-        this.radius += this.speed;
-        this.alpha -= 0.015;
-      }
-      draw(ctx) {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-        ctx.strokeStyle = `rgba(0,191,255,${this.alpha})`;
-        ctx.lineWidth = this.lineWidth;
-        ctx.shadowColor = "rgba(0,191,255,0.6)";
-        ctx.shadowBlur = 8;
-        ctx.stroke();
-      }
-    }
-
-    const particles = [];
-
-    // Track mouse position and create particles continuously
-    let mouse = { x: null, y: null };
-    window.addEventListener("mousemove", e => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+    // Water Ripple Physics Initialization
+    $(document).ready(function() {
+      $('body').ripples({
+        resolution: 512,
+        dropRadius: 20,
+        perturbance: 0.04,
+      });
     });
-
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
-
-      // Add new particle at mouse pos
-      if (mouse.x && mouse.y) {
-        particles.push(new RippleParticle(mouse.x, mouse.y));
-      }
-
-      // Update and draw particles, remove faded ones
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-        p.update();
-        if (p.alpha <= 0) {
-          particles.splice(i, 1);
-        } else {
-          p.draw(ctx);
-        }
-      }
-      requestAnimationFrame(animate);
-    }
-    animate();
   </script>
 </body>
 </html>
